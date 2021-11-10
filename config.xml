@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<module>
+	<name>mwdapplicationtest</name>
+	<displayName><![CDATA[medani - application test module]]></displayName>
+	<version><![CDATA[1.0.0]]></version>
+	<description><![CDATA[This module should be extended by every developer candidate.]]></description>
+	<author><![CDATA[medani digital]]></author>
+	<tab><![CDATA[administration]]></tab>
+	<is_configurable>1</is_configurable>
+	<need_instance>1</need_instance>
+</module>
