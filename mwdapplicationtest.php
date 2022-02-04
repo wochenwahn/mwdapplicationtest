@@ -60,6 +60,7 @@ class Mwdapplicationtest extends Module
     public function install()
     {
         return parent::install() &&
+            $this->registerHook('actionOrderStatusPostUpdate') &&
             $this->registerHook('header') &&
             $this->registerHook('backOfficeHeader');
     }
@@ -86,6 +87,25 @@ class Mwdapplicationtest extends Module
         $output = $this->context->smarty->fetch($this->local_path.'views/templates/admin/configure.tpl');
 
         return $output;
+    }
+
+    public function hookActionOrderStatusPostUpdate(array $params)
+    {
+        if($params['newOrderStatus']->id != 4) return;
+
+        $Order = new Order($params['id_order']);
+        $ref = $Order->reference;
+        $products = $Order->getProducts();
+        
+        $amount = 0;
+        foreach($products as $product) {
+            $amount += $product['product_quantity'];
+        }
+
+        PrestaShopLogger::addLog("Die Bestellung {$ref} wurde versendet.", 1);
+
+        if($amount > 3) PrestaShopLogger::addLog("Die Bestellung {$ref} beinhaltet mehr als 3 Artikel", 2);
+        
     }
 
     /**
